@@ -156,4 +156,3 @@ button1.grid(row=1, column=2, sticky="nw", padx=10, pady=10)
 screen.mainloop()
 
 
-
