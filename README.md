@@ -6,7 +6,7 @@ Mã lớp học phần: 010100086902
 
 Số tín chỉ: 3 - SỐ TIẾT: 45
 
-Giảng viên: Trần Nguyên Bảo
+Giảng viên: T*** N***** B**
 
 Nội dung:
 
