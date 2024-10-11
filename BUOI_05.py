@@ -118,65 +118,61 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Đọc ảnh gốc
-img = cv2.imread('pikachu.jpg', cv2.IMREAD_GRAYSCALE)
+image = cv2.imread('pikachu.jpg', cv2.IMREAD_GRAYSCALE)  # Đọc ảnh dưới dạng màu xám (grayscale)
 
-# Tạo nhiễu muối
-def add_salt_noise(image, amount=0.05):
-    row, col = image.shape
-    num_salt = np.ceil(amount * image.size)
-
-    # Tạo nhiễu muối
+# Hàm thêm nhiễu muối
+def salt_noise(image, prob):
+    noisy_image = np.copy(image)
+    num_salt = np.ceil(prob * image.size)
     coords = [np.random.randint(0, i - 1, int(num_salt)) for i in image.shape]
-    image[coords[0], coords[1]] = 255
+    noisy_image[coords[0], coords[1]] = 255  # Thêm nhiễu muối (trắng)
+    return noisy_image
 
-    return image
-
-# Tạo nhiễu tiêu
-def add_pepper_noise(image, amount=0.05):
-    row, col = image.shape
-    num_pepper = np.ceil(amount * image.size)
-
-    # Tạo nhiễu tiêu
+# Hàm thêm nhiễu tiêu
+def pepper_noise(image, prob):
+    noisy_image = np.copy(image)
+    num_pepper = np.ceil(prob * image.size)
     coords = [np.random.randint(0, i - 1, int(num_pepper)) for i in image.shape]
-    image[coords[0], coords[1]] = 0
+    noisy_image[coords[0], coords[1]] = 0  # Thêm nhiễu tiêu (đen)
+    return noisy_image
 
-    return image
+# Thêm nhiễu muối và tiêu với xác suất 0.02
+salt_image = salt_noise(image, 0.02)
+pepper_image = pepper_noise(image, 0.02)
 
-# Tạo ảnh nhiễu muối và tiêu
-salt_img = add_salt_noise(img.copy(), amount=0.05)
-pepper_img = add_pepper_noise(img.copy(), amount=0.05)
+# Áp dụng bộ lọc Max (maximum filter) và Min (minimum filter)
+max_filter_salt = cv2.dilate(salt_image, np.ones((3, 3), np.uint8))  # Bộ lọc Max cho nhiễu muối
+min_filter_salt = cv2.erode(salt_image, np.ones((3, 3), np.uint8))   # Bộ lọc Min cho nhiễu muối
 
-# Áp dụng lọc Max (Dilation) và Min (Erosion) cho nhiễu muối
-salt_max_filtered = cv2.dilate(salt_img, np.ones((3, 3), np.uint8))
-salt_min_filtered = cv2.erode(salt_img, np.ones((3, 3), np.uint8))
+max_filter_pepper = cv2.dilate(pepper_image, np.ones((3, 3), np.uint8))  # Bộ lọc Max cho nhiễu tiêu
+min_filter_pepper = cv2.erode(pepper_image, np.ones((3, 3), np.uint8))   # Bộ lọc Min cho nhiễu tiêu
 
-# Áp dụng lọc Max (Dilation) và Min (Erosion) cho nhiễu tiêu
-pepper_max_filtered = cv2.dilate(pepper_img, np.ones((3, 3), np.uint8))
-pepper_min_filtered = cv2.erode(pepper_img, np.ones((3, 3), np.uint8))
+# Hiển thị ảnh
+plt.figure(figsize=(12, 10))
 
-# Hiển thị ảnh gốc, ảnh lọc max/min của nhiễu muối và tiêu
-plt.figure(figsize=(10, 8))
+plt.subplot(2, 3, 1)
+plt.imshow(salt_image, cmap='gray')
+plt.title('Salt Noise')
 
-# Ảnh lọc Max của nhiễu muối
-plt.subplot(2, 2, 1)
-plt.imshow(salt_max_filtered, cmap='gray')
-plt.title('Lọc Max - Nhiễu Muối')
+plt.subplot(2, 3, 2)
+plt.imshow(max_filter_salt, cmap='gray')
+plt.title('Max Filter (Salt Noise)')
 
-# Ảnh lọc Min của nhiễu muối
-plt.subplot(2, 2, 2)
-plt.imshow(salt_min_filtered, cmap='gray')
-plt.title('Lọc Min - Nhiễu Muối')
+plt.subplot(2, 3, 3)
+plt.imshow(min_filter_salt, cmap='gray')
+plt.title('Min Filter (Salt Noise)')
 
-# Ảnh lọc Max của nhiễu tiêu
-plt.subplot(2, 2, 3)
-plt.imshow(pepper_max_filtered, cmap='gray')
-plt.title('Lọc Max - Nhiễu Tiêu')
+plt.subplot(2, 3, 4)
+plt.imshow(pepper_image, cmap='gray')
+plt.title('Pepper Noise')
 
-# Ảnh lọc Min của nhiễu tiêu
-plt.subplot(2, 2, 4)
-plt.imshow(pepper_min_filtered, cmap='gray')
-plt.title('Lọc Min - Nhiễu Tiêu')
+plt.subplot(2, 3, 5)
+plt.imshow(max_filter_pepper, cmap='gray')
+plt.title('Max Filter (Pepper Noise)')
+
+plt.subplot(2, 3, 6)
+plt.imshow(min_filter_pepper, cmap='gray')
+plt.title('Min Filter (Pepper Noise)')
 
 plt.tight_layout()
 plt.show()
-
