@@ -1,5 +1,6 @@
 # Image-Processing-and-Computer-Vision
-from Vietnam Aviation Academy - IT_K16_HK7 - 010100086902
+from Vietnam Aviation Academy - IT_K16_HK7 - 010100086902  
+PROJECT on PyCharm
 # HỌC PHẦN: Xử lý ảnh và Thị giác máy tính
 
 Mã lớp học phần: 010100086902
