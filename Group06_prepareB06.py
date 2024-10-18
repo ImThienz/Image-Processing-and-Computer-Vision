@@ -9,7 +9,7 @@ processed_image = None
 def load_image(default=True):
     global original_image, processed_image
     if default:
-        file_path = "VAA.png"
+        file_path = "pic/VAA.png"
     else:
         file_path = filedialog.askopenfilename()
 

@@ -30,7 +30,7 @@
 import cv2
 import numpy as np
 
-image=cv2.imread('cameraman.tif')
+image=cv2.imread('pic/cameraman.tif')
 
 kernel=np.array([[0,0,0],
                 [0,1,0],

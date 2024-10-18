@@ -118,7 +118,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Đọc ảnh gốc
-image = cv2.imread('pikachu.jpg', cv2.IMREAD_GRAYSCALE)  # Đọc ảnh dưới dạng màu xám (grayscale)
+image = cv2.imread('pic/pikachu.jpg', cv2.IMREAD_GRAYSCALE)  # Đọc ảnh dưới dạng màu xám (grayscale)
 
 # Hàm thêm nhiễu muối
 def salt_noise(image, prob):

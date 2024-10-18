@@ -108,7 +108,7 @@ entry2 = tk.Entry(screen, width=10, font=("Arial", 18),
                   fg="yellow", bg="red")
 entry2.grid(row=0, column=3, sticky="nw", padx=0, pady=10)
 
-img = Image.open('mario.jpg')
+img = Image.open('pic/mario.jpg')
 img = img.resize((300, 200))
 photo = ImageTk.PhotoImage(img)
 
